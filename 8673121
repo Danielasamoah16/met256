@@ -1,0 +1,37 @@
+program TemperatureConversion
+  implicit none
+  character(len=20) :: filename
+  integer :: num_temps, i
+  real :: celsius, kelvin
+  integer, parameter :: num_chars = 20
+
+  ! Prompt user for the file name
+  write(*,*) "Enter the name of the file: "
+  read(*,*) filename
+
+  ! Open the file for reading
+  open(unit=10, file=trim(filename), status='old', action='read', iostat=i)
+  if (i /= 0) then
+    write(*,*) "Error opening the file."
+    stop
+  end if
+
+  ! Read the number of temperature values
+  read(10, *) num_temps
+
+  ! Process each temperature value
+  do i = 1, num_temps
+    read(10, *) celsius
+    kelvin = celsius + 273.15
+
+    ! Print the converted value
+    write(*,*) "Temperature in Celsius:", celsius
+    write(*,*) "Temperature in Kelvin:", kelvin
+    write(*,*)
+
+  end do
+
+  ! Close the file
+  close(10)
+
+end program TemperatureConversion
